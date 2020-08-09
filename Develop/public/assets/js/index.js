@@ -10,7 +10,7 @@ var activeNote = {};
 // A function for getting all notes from the db
 var getNotes = function() {
   return $.ajax({
-    url: "/api/notes",
+    url: "/routes/apiRoutes/notes",
     method: "GET"
   });
 };
