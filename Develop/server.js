@@ -14,9 +14,7 @@ app.use('/', htmlRoutes);
 
 //allows the html file to use the css and js 
 app.use(express.static('public'));
-/* app.get("/api/notes", (req, res) => {
-    res.send('Hello!');
-}); */
+
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });

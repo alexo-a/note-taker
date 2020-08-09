@@ -1,36 +1,32 @@
 const router = require('express').Router();
-//const { filterByQuery, findById, createNewAnimal, validateAnimal } = require('../../lib/animals');
-const { notes } = require('../../db/db');
+const { createNewNote } = require('../../lib/notes');
+let idArray = []//probably doesn't need to be global
+let { notes } = require('../../db/db');
 
-
-
+function getNextId(){
+    //extract the IDs (as ints)
+    idArray = notes.map(function (note) {
+        return parseInt(note.id);
+    });
+    //sort the array in descending order
+    idArray.sort(function (a, b) {
+        return b-a;
+    });
+    //return the highest ID plus one 
+    return idArray[0]+1;
+}
 
 router.get('/notes', (req, res) => {
-    console.log("notes.js")
     let results = notes;
     res.json(results);
 });
 
-/* router.get('/animals/:id', (req, res) => {
-    const result = findById(req.params.id, animals);
-    if (result) {
-        res.json(result);
-    } else {
-        res.send(404);
-    }
-}); */
+router.post('/notes', (req, res) => {
+    const newID = getNextId();
 
-/* router.post('/animals', (req, res) => {
-    // set id based on what the next index of the array will be
-    req.body.id = animals.length.toString();
-
-    // if any data in req.body is incorrect, send 400 error back
-    if (!validateAnimal(req.body)) {
-        res.status(400).send('The animal is not properly formatted.');
-    } else {
-        const animal = createNewAnimal(req.body, animals);
-        res.json(animal);
-    }
-}); */
-
+    //set the body id
+    req.body.id = newID.toString();
+    const newNote = createNewNote(req.body, notes, newID.toString());
+    res.json(newNote);
+});
 module.exports = router;
