@@ -35,7 +35,7 @@
 
 
 <p align="center">
-  <h1>Note Taker</h1>
+  <h1 align="center">Note Taker</h1>
 
 
 
