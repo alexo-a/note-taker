@@ -9,14 +9,16 @@ var activeNote = {};
 
 // A function for getting all notes from the db
 var getNotes = function() {
+    console.log("getting notes");
   return $.ajax({
-    url: "/routes/apiRoutes/notes",
+    url: "/api/notes",
     method: "GET"
   });
 };
 
 // A function for saving a note to the db
 var saveNote = function(note) {
+    console.log("save note");
   return $.ajax({
     url: "/api/notes",
     data: note,
@@ -26,6 +28,7 @@ var saveNote = function(note) {
 
 // BONUS A function for deleting a note from the db
 var deleteNote = function(id) {
+    console.log("delete note");
   return $.ajax({
     url: "api/notes/" + id,
     method: "DELETE"
@@ -34,6 +37,7 @@ var deleteNote = function(id) {
 
 // If there is an activeNote, display it, otherwise render empty inputs
 var renderActiveNote = function() {
+    console.log("render active note");
   $saveNoteBtn.hide();
 
   if (activeNote.id) {
@@ -51,6 +55,7 @@ var renderActiveNote = function() {
 
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function() {
+    console.log("handle note save");
   var newNote = {
     title: $noteTitle.val(),
     text: $noteText.val()
@@ -83,12 +88,14 @@ var handleNoteDelete = function(event) {
 
 // Sets the activeNote and displays it
 var handleNoteView = function() {
+    console.log("handle note view");
   activeNote = $(this).data();
   renderActiveNote();
 };
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
 var handleNewNoteView = function() {
+    console.log("handle new note view");
   activeNote = {};
   renderActiveNote();
 };
@@ -96,6 +103,7 @@ var handleNewNoteView = function() {
 // If a note's title or text are empty, hide the save button
 // Or else show it
 var handleRenderSaveBtn = function() {
+    console.log("handle render save btn");
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
     $saveNoteBtn.hide();
   } else {
@@ -105,6 +113,7 @@ var handleRenderSaveBtn = function() {
 
 // Render's the list of note titles
 var renderNoteList = function(notes) {
+    console.log("render note list");
   $noteList.empty();
 
   var noteListItems = [];
@@ -127,7 +136,9 @@ var renderNoteList = function(notes) {
 
 // Gets notes from the db and renders them to the sidebar
 var getAndRenderNotes = function() {
+    console.log("get and render notes");
   return getNotes().then(function(data) {
+      console.log(data);
     renderNoteList(data);
   });
 };

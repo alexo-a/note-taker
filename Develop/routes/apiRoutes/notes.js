@@ -2,6 +2,9 @@ const router = require('express').Router();
 //const { filterByQuery, findById, createNewAnimal, validateAnimal } = require('../../lib/animals');
 const { notes } = require('../../db/db');
 
+
+
+
 router.get('/notes', (req, res) => {
     console.log("notes.js")
     let results = notes;
