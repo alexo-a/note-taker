@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { createNewNote } = require('../../lib/notes');
+const { createNewNote, deleteNote } = require('../../lib/notes');
 let idArray = []//probably doesn't need to be global
 let { notes } = require('../../db/db');
 
@@ -28,5 +28,10 @@ router.post('/notes', (req, res) => {
     req.body.id = newID.toString();
     const newNote = createNewNote(req.body, notes, newID.toString());
     res.json(newNote);
+});
+
+router.delete("/notes/:id", (req, res) => {
+    const deletedNote = deleteNote(req.params.id, notes);
+    res.json(deletedNote);
 });
 module.exports = router;

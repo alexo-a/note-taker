@@ -3,22 +3,35 @@
 const fs = require("fs");
 const path = require("path");
 
-
-
-function test(){
-    console.log("./lib/notes.js working")
-};
-function createNewNote(note, notesArray, newIndex){
+function createNewNote(note, notesArray, newIndex) {
     notesArray.push(note);
     fs.writeFileSync(
         path.join(__dirname, '../db/db.json'),
-        JSON.stringify({ notes: notesArray , index: newIndex}, null, 2)
+        JSON.stringify({ notes: notesArray }, null, 2)
     );
     return note;
 
 };
 
-module.exports= {
-test,
-createNewNote
+function deleteNote(id, notesArray) {
+    id = id.toString();
+    let indexToDelete = 0;
+    for (i = 0; i < notesArray.length; i++){
+        if (notesArray[i].id === id){
+            indexToDelete = i; 
+            break;
+        }
+    }
+    let deletedNote = notesArray.splice(indexToDelete,1);
+
+    fs.writeFileSync(
+        path.join(__dirname, '../db/db.json'),
+        JSON.stringify({ notes: notesArray }, null, 2)
+    );
+    return deletedNote;
+}
+
+module.exports = {
+    createNewNote,
+    deleteNote
 }
